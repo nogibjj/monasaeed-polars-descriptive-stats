@@ -1,5 +1,3 @@
-def divide(x, y):
-    if y == 0:
-        return None
-    else:
-        return x/y
+import pandas as pd
+import numpy as np
+import math
