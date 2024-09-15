@@ -10,9 +10,9 @@ diamonds = sns.load_dataset('diamonds')
 def test_get_summary_statistics():
   
 
-def test_get_mode(self):
+def test_get_mode():
 
-def test_get_variance_std(self):
+def test_get_variance_std():
 
 
 
