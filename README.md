@@ -2,10 +2,9 @@
 
 Welcome to the repository for the second week of the Data Engineering Systems course at Duke University. 
 
-## Overview
 ## Project Overview
 
-This project leverages a template developed last week [mts79-week1](https://github.com/nogibjj/mts79-week1), which includes essential tools and configurations to streamline the development process. The template provides a standardized setup, including predefined environments and useful scripts for quick project initialization.
+This project leverages a template developed last week [mts79-week1](https://github.com/nogibjj/mts79-week1), which includes essential tools and configurations to streamline the development process.
 
 Additionally, this project utilizes the **Diamond Dataset** to perform descriptive statistics using **Pandas**. It generates a comprehensive summary report, offering insights into the dataset's key attributes and statistical measures.
 
@@ -20,13 +19,13 @@ Additionally, this project utilizes the **Diamond Dataset** to perform descripti
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/nogibjj/mts79-week1.git
+    git clone https://github.com/nogibjj/monasaeed-week2.git
     ```
 
 2. **Navigate into the project directory:**
 
     ```bash
-    cd mts79-week1
+    cd monasaeed-week2
     ```
 
 3. **Install the required dependencies:**
