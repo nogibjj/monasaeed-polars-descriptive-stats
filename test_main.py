@@ -18,4 +18,6 @@ def test_get_variance_std():
 
 
 if __name__ == '__main__':
-     
+    test_get_summary_statistics()
+    test_get_mode()
+    test_get_variance_std()
