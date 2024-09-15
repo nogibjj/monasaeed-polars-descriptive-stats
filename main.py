@@ -12,9 +12,9 @@ def get_mode():
     return dataset.mode().iloc[0]
 
 def get_variance_std():
-    variance = dataset.var()
-    std_dev = dataset.std()
-    return pd.DataFrame({'Variance': variance, 'Standard Deviation': std_dev})
+    variance = dataset['price'].var()
+    std_dev = dataset['price'].std()
+    return variance, std_dev
 
 def generate_viz_diamonds():
     #df = sns.load_dataset('diamonds')
