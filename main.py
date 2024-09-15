@@ -68,3 +68,5 @@ def save_diamonds_report_to_markdown():
     
     print("Markdown report saved as 'diamonds_summary.md'.")
 
+if __name__ == '__main__':
+    save_diamonds_report_to_markdown()
