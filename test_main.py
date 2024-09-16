@@ -1,6 +1,4 @@
 from main import *
-import seaborn as sns
-diamonds = sns.load_dataset('diamonds')
 
 def test_get_summary_statistics():
     '''testing for price'''
