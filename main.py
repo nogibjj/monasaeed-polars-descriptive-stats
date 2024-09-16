@@ -26,17 +26,20 @@ def generate_viz_diamonds(save_as_image=True):
     
     # Plotting price distribution
     p = sns.histplot(prices, color=palette[8], kde=True, bins=30, alpha=1, fill=True, edgecolor="black", linewidth=3)
-    p.axes.lines[0].set_color("orange")
+    
+    # Handle the axes settings properly
     p.axes.set_title("\nDiamond's Price Distribution\n", fontsize=25)
     plt.ylabel("Count", fontsize=20)
     plt.xlabel("\nPrice", fontsize=20)
     plt.yscale("linear")
+    
     sns.despine(left=True, bottom=True)
     
     if save_as_image:
         plt.savefig("diamonds_price_distribution.png")
     
     plt.show()
+
 
 def save_diamonds_report_to_markdown():
     """Generates a markdown report for the diamonds dataset and saves it to a file."""
