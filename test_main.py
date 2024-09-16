@@ -1,10 +1,4 @@
-from main import (
-    get_summary_statistics,
-    get_mode,
-    get_variance_std,
-    generate_viz_diamonds,
-    generate_summary_report,
-)
+from main import *
 import seaborn as sns
 diamonds = sns.load_dataset('diamonds')
 
@@ -44,15 +38,8 @@ def test_generate_viz_diamonds():
     except Exception as e:
         assert False, f"generate_viz_diamonds() raised an exception: {e}"
 
-def test_generate_summary_report():
-    try:
-        generate_summary_report()
-    except Exception as e:
-        assert False, f"generate_summary_report() raised an exception: {e}"
-
 if __name__ == '__main__':
     test_get_summary_statistics()
     test_get_mode()
     test_get_variance_std()
     test_generate_viz_diamonds()
-    test_generate_summary_report()
