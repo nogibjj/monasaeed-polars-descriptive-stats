@@ -1,7 +1,6 @@
 from main import *
 
 def test_get_summary_statistics():
-    '''testing for price'''
     summary = get_summary_statistics()
     assert summary.loc['count', 'price'] == 53940
     assert round(summary.loc['mean', 'price'], 6) == 3932.799722
