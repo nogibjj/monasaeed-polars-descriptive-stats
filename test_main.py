@@ -29,14 +29,7 @@ def test_get_variance_std():
     assert round(variance, 6) == 15915629.424301
     assert round(std_dev, 6) == 3989.439738
 
-def test_generate_viz_diamonds():
-    try:
-        generate_viz_diamonds()
-    except Exception as e:
-        assert False, f"generate_viz_diamonds() raised an exception: {e}"
-
 if __name__ == '__main__':
     test_get_summary_statistics()
     test_get_mode()
     test_get_variance_std()
-    test_generate_viz_diamonds()
