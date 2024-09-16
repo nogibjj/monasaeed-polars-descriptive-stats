@@ -14,6 +14,7 @@ uvicorn==0.18.3
 #data
 pandas==2.2.2
 numpy==1.25
+tabulate
 seaborn==0.13.2
 matplotlib==3.5.1
 #IPython==8.15.0
