@@ -13,7 +13,7 @@ uvicorn==0.18.3
 
 #data
 pandas==2.1.0
-numpy==2.1.1
+#numpy==2.1.1
 seaborn==0.13.2
 matplotlib==3.5.1
 #IPython==8.15.0
