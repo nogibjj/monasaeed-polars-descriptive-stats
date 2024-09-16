@@ -45,9 +45,9 @@ def generate_viz_diamonds(save_as_image=True):
 def save_diamonds_report_to_markdown():
     """Generates a markdown report for the diamonds dataset and saves it to a file."""
     # Call helper functions with the dataset
-    summary_df = get_summary_statistics(dataset)
-    mode_df = pd.DataFrame(get_mode(dataset)).T  
-    variance, std_dev = get_variance_std(dataset)
+    summary_df = get_summary_statistics()
+    mode_df = pd.DataFrame(get_mode()).T  
+    variance, std_dev = get_variance_std()
     
     # Convert to markdown
     markdown_summary = summary_df.to_markdown()
