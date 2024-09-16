@@ -14,6 +14,8 @@ Additionally, this project utilizes the **Diamond Dataset** to perform descripti
 - **Makefile**: Automation of common tasks and commands.
 - **.github**: GitHub Actions for continuous integration and deployment.
 - **requirements.txt**: List of dependencies required for the project.
+- **diamonds_summary.md**: a file that contains summary statistics of the diamonds dataset, it also contains a visualization of the distribution of diamonds prices.
+> For a more comprehensive analysis of the dataset check my other repository [diamonds_dataset_analysis](https://github.com/monatagelsir7/diamonds_dataset_analysis)
 
 ## Getting Started
 1. **Clone the repository:**
