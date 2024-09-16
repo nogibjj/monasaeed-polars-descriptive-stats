@@ -18,10 +18,8 @@ def get_variance_std():
 
 def generate_viz_diamonds(save_as_image=True):
     """Generates and optionally saves the diamond price distribution plot."""
-    fig, ax = plt.subplots(figsize=(20, 8))  # Creating figure and axis
+    fig, ax = plt.subplots(figsize=(20, 8)) # pylint: disable=unused-variable
     palette = ["#c94727", "#ea5b17", "#e57716", "#f2a324", "#a2c0a6", "#7ac0a8", "#5e9786", "#557260", "#5b5572"]
-
-    # Ensure 'price' is a 1D array
     prices = np.array(dataset["price"]).flatten()
     
     # Plotting price distribution
