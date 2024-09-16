@@ -1,9 +1,8 @@
 # Data Engineering Systems Course - Week 2
-
-Welcome to the repository for the second week of the Data Engineering Systems course at Duke University. 
+Welcome to the repository for the second week of the Data Engineering Systems course at Duke University.
+[![CI](https://github.com/nogibjj/monasaeed-week2/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/monasaeed-week2/actions/workflows/cicd.yml)
 
 ## Project Overview
-
 This project leverages a template developed last week [mts79-week1](https://github.com/nogibjj/mts79-week1), which includes essential tools and configurations to streamline the development process.
 
 Additionally, this project utilizes the **Diamond Dataset** to perform descriptive statistics using **Pandas**. It generates a comprehensive summary report, offering insights into the dataset's key attributes and statistical measures.
