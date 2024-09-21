@@ -2,27 +2,34 @@ from main import *
 
 def test_get_summary_statistics():
     summary = get_summary_statistics()
-    assert summary.loc['count', 'price'] == 53940
-    assert round(summary.loc['mean', 'price'], 6) == 3932.799722
-    assert round(summary.loc['std', 'price'], 6) == 3989.439738
-    assert summary.loc['min', 'price'] == 326
-    assert summary.loc['25%', 'price'] == 950
-    assert summary.loc['50%', 'price'] == 2401
-    assert summary.loc['75%', 'price'] == 5324.25
-    assert summary.loc['max', 'price'] == 18823
+    # Convert 'summary' to a dictionary or access elements using Polars' indexing
+    summary_dict = summary.to_dict(as_series=False)
+    
+    # Access values from the summary dictionary
+    assert summary_dict['price'][0] == 53940  # count
+    assert round(summary_dict['price'][1], 6) == 3932.799722  # mean
+    assert round(summary_dict['price'][2], 6) == 3989.439738  # std
+    assert summary_dict['price'][3] == 326  # min
+    assert summary_dict['price'][4] == 950  # 25%
+    assert summary_dict['price'][5] == 2401  # 50%
+    assert summary_dict['price'][6] == 5324.25  # 75%
+    assert summary_dict['price'][7] == 18823  # max
   
 def test_get_mode():
     mode = get_mode()
-    assert mode['carat'] == 0.3
-    assert mode['cut'] == 'Ideal'
-    assert mode['color'] == 'G'
-    assert mode['clarity'] == 'SI1'
-    assert mode['depth'] == 62.0
-    assert mode['table'] == 56.0
-    assert mode['price'] == 605
-    assert mode['x'] == 4.37
-    assert mode['y'] == 4.34
-    assert mode['z'] == 2.7
+    mode_dict = mode.to_dict(as_series=False)
+
+    # Access values from the mode dictionary
+    assert mode_dict['carat'][0] == 0.3
+    assert mode_dict['cut'][0] == 'Ideal'
+    assert mode_dict['color'][0] == 'G'
+    assert mode_dict['clarity'][0] == 'SI1'
+    assert mode_dict['depth'][0] == 62.0
+    assert mode_dict['table'][0] == 56.0
+    assert mode_dict['price'][0] == 605
+    assert mode_dict['x'][0] == 4.37
+    assert mode_dict['y'][0] == 4.34
+    assert mode_dict['z'][0] == 2.7
 
 def test_get_variance_std():
     variance, std_dev = get_variance_std()

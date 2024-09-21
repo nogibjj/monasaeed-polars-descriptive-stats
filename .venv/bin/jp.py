@@ -1,4 +1,4 @@
-#!/workspaces/monasaeed-week2/.venv/bin/python
+#!/workspaces/monasaeed-polars-descriptive-stats/.venv/bin/python
 
 import sys
 import json

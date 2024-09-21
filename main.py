@@ -1,55 +1,72 @@
-import pandas as pd
+import polars as pl
 import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.pyplot as plt
 
-dataset = sns.load_dataset('diamonds')
+dataset = pl.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/diamonds.csv", 
+                       truncate_ragged_lines=True)
 
 def get_summary_statistics():
     return dataset.describe()
 
 def get_mode():
-    return dataset.mode().iloc[0]
+    return (
+        dataset
+        .select([
+            pl.col("carat").mode().alias("carat"),
+            pl.col("cut").mode().alias("cut"),
+            pl.col("color").mode().alias("color"),
+            pl.col("clarity").mode().alias("clarity"),
+            pl.col("depth").mode().alias("depth"),
+            pl.col("table").mode().alias("table"),
+            pl.col("price").mode().alias("price"),
+            pl.col("x").mode().alias("x"),
+            pl.col("y").mode().alias("y"),
+            pl.col("z").mode().alias("z"),
+        ])
+    ).to_dict()
+
 
 def get_variance_std():
-    variance = dataset['price'].var()
-    std_dev = dataset['price'].std()
+    variance = dataset["price"].var()
+    std_dev = dataset["price"].std()
     return variance, std_dev
 
-def generate_viz_diamonds(save_as_image=True):
-    """Generates and optionally saves the diamond price distribution plot."""
-    fig, ax = plt.subplots(figsize=(20, 8)) # pylint: disable=unused-variable
-    palette = ["#c94727", "#ea5b17", "#e57716", "#f2a324", "#a2c0a6", "#7ac0a8", "#5e9786", "#557260", "#5b5572"]
-    prices = np.array(dataset["price"]).flatten()
-    
-    # Plotting price distribution
-    sns.histplot(prices, color=palette[8], kde=True, bins=30, alpha=1, fill=True, edgecolor="black", linewidth=3, ax=ax)
-    
-    # Set plot title, labels, and scale
-    ax.set_title("\nDiamond's Price Distribution\n", fontsize=25)
-    ax.set_ylabel("Count", fontsize=20)
-    ax.set_xlabel("\nPrice", fontsize=20)
-    ax.set_yscale("linear")
-    
-    sns.despine(left=True, bottom=True)
-    
+def generate_viz_diamonds(save_as_image=False):
+    """Generates and saves a visualization of diamond prices."""
+    prices = dataset['price'].to_numpy()  # Convert to NumPy array
+
+    plt.figure(figsize=(10, 6))
+    ax = sns.histplot(prices, color='blue', kde=True, bins=30, alpha=1, fill=True, edgecolor="black", linewidth=3)
+    ax.set_title('Distribution of Diamond Prices')
+    ax.set_xlabel('Price')
+    ax.set_ylabel('Frequency')
+
     if save_as_image:
-        plt.savefig("diamonds_price_distribution.png")
-    
+        plt.savefig('diamonds_price_distribution.png')
     plt.show()
 
-
+import pandas as pd
 
 def save_diamonds_report_to_markdown():
     """Generates a markdown report for the diamonds dataset and saves it to a file."""
     # Call helper functions with the dataset
     summary_df = get_summary_statistics()
-    mode_df = pd.DataFrame(get_mode()).T  
+    mode_dict = get_mode()  # get_mode should return a dictionary now
     variance, std_dev = get_variance_std()
     
-    # Convert to markdown
-    markdown_summary = summary_df.to_markdown()
-    markdown_mode = mode_df.to_markdown()
+    # Manually create markdown for summary statistics
+    markdown_summary = "# Summary Statistics\n"
+    for col in summary_df.columns:
+        markdown_summary += f"## {col}\n"
+        for stat in summary_df[col]:
+            markdown_summary += f"- {stat}\n"
+    
+    # Manually create markdown for mode
+    markdown_mode = "## Mode\n"
+    for col, value in mode_dict.items():  # iterate over the dictionary
+        markdown_mode += f"- {col}: {value}\n"
+    
     variance_std_markdown = f"**Variance:** {variance}\n\n**Standard Deviation:** {std_dev}\n"
     
     # Generate visualization
@@ -58,10 +75,8 @@ def save_diamonds_report_to_markdown():
     # Write the markdown report to a file
     with open("diamonds_summary.md", "w", encoding="utf-8") as file:
         file.write("# Diamonds Dataset Summary Report\n\n")
-        file.write("## Summary Statistics:\n")
         file.write(markdown_summary)
         file.write("\n\n")
-        file.write("## Mode:\n")
         file.write(markdown_mode)
         file.write("\n\n")
         file.write("## Variance and Standard Deviation:\n")
@@ -76,3 +91,4 @@ def save_diamonds_report_to_markdown():
 
 if __name__ == '__main__':
     save_diamonds_report_to_markdown()
+
