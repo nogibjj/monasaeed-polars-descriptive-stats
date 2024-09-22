@@ -30,7 +30,3 @@
 
 ## Carat vs Price Scatter Plot
 ![Carat vs Price Scatter Plot](carat_price_scatter_plot.png)
-
-## Diamond Price Distribution:
-![Diamond Price Distribution](diamonds_price_distribution.png)
-

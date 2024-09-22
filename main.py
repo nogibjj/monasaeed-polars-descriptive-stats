@@ -1,6 +1,5 @@
 import seaborn as sns
 import polars as pl
-import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -69,7 +68,7 @@ def save_summary_report_to_markdown():
     markdown_summary += "![Carat vs Price Scatter Plot](carat_price_scatter_plot.png)\n"
 
     # Save the report to a markdown file
-    with open("diamonds_summary_report.md", "w") as f:
+    with open("diamonds_summary_report.md", "w", encoding="utf-8") as f:
         f.write(markdown_summary)
 
     print("Summary report saved as diamonds_summary_report.md")
