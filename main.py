@@ -75,5 +75,10 @@ def save_summary_report_to_markdown():
 
 if __name__ == "__main__":
     stats = get_descriptive_statistics('price')
+    print("Descriptive statistics for 'price':")
+    print(f"Mean: {stats['mean']}")
+    print(f"Median: {stats['median']}")
+    print(f"Variance: {stats['variance']}")
+    print(f"Standard Deviation: {stats['std_dev']}")
     generate_carat_price_scatter_plot(save_as_image=True)
     save_summary_report_to_markdown()
