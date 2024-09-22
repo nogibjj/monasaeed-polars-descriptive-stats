@@ -1,4 +1,4 @@
-# Data Engineering Systems Course - Week 2
+# Data Engineering Systems Course - Polars Descriptive Statistics
 [![CI](https://github.com/nogibjj/monasaeed-polars-descriptive-stats/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/monasaeed-polars-descriptive-stats/actions/workflows/cicd.yml)
 
 Welcome to the repository for the third week of the Data Engineering Systems course at Duke University.
