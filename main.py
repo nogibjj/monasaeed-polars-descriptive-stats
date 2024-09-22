@@ -1,94 +1,80 @@
+import seaborn as sns
 import polars as pl
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
 
-dataset = pl.read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/diamonds.csv", 
-                       truncate_ragged_lines=True)
 
-def get_summary_statistics():
-    return dataset.describe()
+diamonds = sns.load_dataset('diamonds')
+df = pl.DataFrame(diamonds)
 
-def get_mode():
-    return (
-        dataset
-        .select([
-            pl.col("carat").mode().alias("carat"),
-            pl.col("cut").mode().alias("cut"),
-            pl.col("color").mode().alias("color"),
-            pl.col("clarity").mode().alias("clarity"),
-            pl.col("depth").mode().alias("depth"),
-            pl.col("table").mode().alias("table"),
-            pl.col("price").mode().alias("price"),
-            pl.col("x").mode().alias("x"),
-            pl.col("y").mode().alias("y"),
-            pl.col("z").mode().alias("z"),
-        ])
-    ).to_dict()
+def get_descriptive_statistics(column_name):
+    """
+    Returns mean, median, variance, and standard deviation for a given column in the dataset.
+    """
+    mean = df[column_name].mean()
+    median = df[column_name].median()
+    variance = df[column_name].var()
+    std_dev = df[column_name].std()
+    
+    return {
+        'mean': mean,
+        'median': median,
+        'variance': variance,
+        'std_dev': std_dev
+    }
 
-
-def get_variance_std():
-    variance = dataset["price"].var()
-    std_dev = dataset["price"].std()
-    return variance, std_dev
-
-def generate_viz_diamonds(save_as_image=False):
-    """Generates and saves a visualization of diamond prices."""
-    prices = dataset['price'].to_numpy()  # Convert to NumPy array
-
-    plt.figure(figsize=(10, 6))
-    ax = sns.histplot(prices, color='blue', kde=True, bins=30, alpha=1, fill=True, edgecolor="black", linewidth=3)
-    ax.set_title('Distribution of Diamond Prices')
-    ax.set_xlabel('Price')
-    ax.set_ylabel('Frequency')
-
+def generate_carat_price_scatter_plot(save_as_image=False):
+    # Extract carat and price columns as lists using Polars
+    carat = df["carat"].to_list()
+    price = df["price"].to_list()
+    
+    # Generate scatter plot using matplotlib
+    plt.scatter(carat, price, alpha=0.5)
+    plt.title("Carat vs Price Scatter Plot")
+    plt.xlabel("Carat")
+    plt.ylabel("Price")
+    
+    # Save the plot as a PNG image if requested
     if save_as_image:
-        plt.savefig('diamonds_price_distribution.png')
+        plt.savefig("carat_price_scatter_plot.png")
+        print("Plot saved as carat_price_scatter_plot.png")
+    
+    # Show the plot
     plt.show()
 
-import pandas as pd
+def get_summary_statistics():
+    pandas_df = df.to_pandas()
+    desc_stats = pandas_df.describe()
+    mode_df = pandas_df.mode().iloc[0]
 
-def save_diamonds_report_to_markdown():
-    """Generates a markdown report for the diamonds dataset and saves it to a file."""
-    # Call helper functions with the dataset
-    summary_df = get_summary_statistics()
-    mode_dict = get_mode()  # get_mode should return a dictionary now
-    variance, std_dev = get_variance_std()
-    
-    # Manually create markdown for summary statistics
-    markdown_summary = "# Summary Statistics\n"
-    for col in summary_df.columns:
-        markdown_summary += f"## {col}\n"
-        for stat in summary_df[col]:
-            markdown_summary += f"- {stat}\n"
-    
-    # Manually create markdown for mode
-    markdown_mode = "## Mode\n"
-    for col, value in mode_dict.items():  # iterate over the dictionary
-        markdown_mode += f"- {col}: {value}\n"
-    
-    variance_std_markdown = f"**Variance:** {variance}\n\n**Standard Deviation:** {std_dev}\n"
-    
-    # Generate visualization
-    generate_viz_diamonds(save_as_image=True)
-    
-    # Write the markdown report to a file
-    with open("diamonds_summary.md", "w", encoding="utf-8") as file:
-        file.write("# Diamonds Dataset Summary Report\n\n")
-        file.write(markdown_summary)
-        file.write("\n\n")
-        file.write(markdown_mode)
-        file.write("\n\n")
-        file.write("## Variance and Standard Deviation:\n")
-        file.write(variance_std_markdown)
-        file.write("\n\n")
-        
-        # Visualization
-        file.write("## Diamond Price Distribution:\n")
-        file.write("![Diamond Price Distribution](diamonds_price_distribution.png)\n")
-    
-    print("Markdown report saved as 'diamonds_summary.md'.")
+    # Prepare summary statistics as markdown
+    markdown_summary = "## Diamonds Dataset Summary Statistics\n\n"
+    markdown_summary += "### Descriptive Statistics:\n\n"
+    markdown_summary += desc_stats.to_markdown() + "\n\n"
+    markdown_summary += "### Mode of Each Column:\n\n"
+    markdown_summary += mode_df.to_markdown() + "\n"
 
-if __name__ == '__main__':
-    save_diamonds_report_to_markdown()
+    return markdown_summary
 
+# Function to save summary report to a markdown file
+def save_summary_report_to_markdown():
+    # Generate scatter plot and save as .png
+    generate_carat_price_scatter_plot(save_as_image=True)
+
+    # Get summary statistics in markdown format
+    markdown_summary = get_summary_statistics()
+
+    # Add the image to the markdown report
+    markdown_summary += "\n## Carat vs Price Scatter Plot\n"
+    markdown_summary += "![Carat vs Price Scatter Plot](carat_price_scatter_plot.png)\n"
+
+    # Save the report to a markdown file
+    with open("diamonds_summary_report.md", "w") as f:
+        f.write(markdown_summary)
+
+    print("Summary report saved as diamonds_summary_report.md")
+
+if __name__ == "__main__":
+    stats = get_descriptive_statistics('price')
+    generate_carat_price_scatter_plot(save_as_image=True)
+    save_summary_report_to_markdown()
